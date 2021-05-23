@@ -25,8 +25,8 @@ Route::get('/', function () {
 //     Route::get('/callback', [App\Http\Controllers\LoginController::class, 'handleProviderCallback'])->name('sns_login.callback');
 // });
 
-Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->where('social', 'twitter|facebook');
-Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'twitter|facebook');
+Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->where('social', 'github|facebook');
+Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'github|facebook');
 // シンプルに実装する場合
 // Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
