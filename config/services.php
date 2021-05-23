@@ -31,11 +31,11 @@ return [
     ],
 
     // twitter認証
-    'twitter' => [
-        'client_id'        => env('TWITTER_KEY'),
-        'client_secret' => env('TWITTER_SECRET'),
-        'redirect'        => env('TWITTER_REDIRECT_URI'),
-    ],
+    // 'twitter' => [
+    //     'client_id'        => env('TWITTER_KEY'),
+    //     'client_secret' => env('TWITTER_SECRET'),
+    //     'redirect'        => env('TWITTER_REDIRECT_URI'),
+    // ],
 
     'facebook' => [
         'client_id'        => env('FACEBOOK_KEY'),
@@ -46,6 +46,6 @@ return [
     'github' => [
         'client_id'        => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect'        => env('GITHUB_REDIRECT_URI'),
+        'redirect' => env('APP_URL') . '/login/github/callback',
     ],
 ];

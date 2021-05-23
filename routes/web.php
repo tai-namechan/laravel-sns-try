@@ -25,8 +25,9 @@ Route::get('/', function () {
 //     Route::get('/callback', [App\Http\Controllers\LoginController::class, 'handleProviderCallback'])->name('sns_login.callback');
 // });
 
-Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->where('social', 'github|facebook');
-Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'github|facebook');
+// Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->where('social', 'github|facebook');
+// Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'github|facebook');
+
 // シンプルに実装する場合
 // Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
@@ -36,3 +37,13 @@ Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCal
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// github
+// Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+// Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+// GitHubの認証ページに遷移するためのルーティング
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+
+// GitHubの認証後に戻るためのルーティング
+Route::get('/login/callback/github', 'Auth\LoginController@handleProviderCallback');

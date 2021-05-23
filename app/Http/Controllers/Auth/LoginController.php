@@ -10,7 +10,6 @@ use Auth;
 use Socialite;
 use App\User;
 use App\IdentityProvider;
-
 class LoginController extends Controller
 {
     /*
@@ -43,48 +42,40 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToProvider($social)
-    {
-        return Socialite::driver($social)->redirect();
+    /**
+ * GitHubの認証ページヘユーザーを転送するためのルート
+ *
+ * @return \Symfony\Component\HttpFoundation\RedirectResponse
+ */
+ public function redirectToProvider() {
+    return Socialite::driver("github")->redirect();
+  }
+ 
+ /**
+  * GitHubの認証後に戻るルート
+  *
+  * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+  */
+  public function handleProviderCallback() {
+    try {
+      $user = Socialite::with("github")->user();
+    } catch (Exception $e) {
+      return redirect('/welcome'); // エラーならウェルカムページに転送
     }
-
-    public function handleProviderCallback($provider)
-    {
-        try {
-            $user = Socialite::driver($provider)->user();
-        } catch (Exception $e) {
-            return redirect('/login');
-        }
-
-        $authUser = $this->findOrCreateUser($user, $provider);
-        Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+ 
+    // nameかnickNameをuserNameにする
+    if ($user->getName()) {
+      $userName = $user->getName();
+    } else {
+      $userName = $user->getNickName();
     }
-
-    public function findOrCreateUser($providerUser, $provider)
-    {
-        $account = IdentityProvider::whereProviderName($provider)
-                    ->whereProviderId($providerUser->getId())
-                    ->first();
-
-        if ($account) {
-            return $account->user;
-        } else {
-            $user = User::whereEmail($providerUser->getEmail())->first();
-
-            if (!$user) {
-                $user = User::create([
-                    'email' => $providerUser->getEmail(),
-                    'name'  => $providerUser->getName(),
-                ]);
-            }
-
-            $user->IdentityProviders()->create([
-                'provider_id'   => $providerUser->getId(),
-                'provider_name' => $provider,
-            ]);
-
-            return $user;
-        }
-    }
+ 
+    // mailアドレスおよび名前を保存
+    $authUser = User::firstOrCreate([
+      'email' => $user->getEmail(),
+      'name' => $userName
+    ]);
+    auth()->login($authUser); // ログイン
+    return redirect()->to('/home'); // homeページに転送
+  }
 }
