@@ -17,5 +17,4 @@ class TrustHosts extends Middleware
             $this->allSubdomainsOfApplicationUrl(),
         ];
     }
-    protected $proxies = '*';
 }
