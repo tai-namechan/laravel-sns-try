@@ -10,6 +10,7 @@ use Auth;
 use Socialite;
 use App\User;
 use App\IdentityProvider;
+
 class LoginController extends Controller
 {
     /*
@@ -49,8 +50,6 @@ class LoginController extends Controller
  */
  public function redirectToProvider() {
     return Socialite::driver("github")->redirect();
-    return Socialite::driver("facebook")->redirect();
-  
   }
  
  /**
@@ -62,7 +61,7 @@ class LoginController extends Controller
     try {
       $user = Socialite::with("github")->user();
     } catch (Exception $e) {
-      return redirect('/login'); // エラーならログインページに転送
+      return redirect('/welcome'); // エラーならウェルカムページに転送
     }
  
     // nameかnickNameをuserNameにする

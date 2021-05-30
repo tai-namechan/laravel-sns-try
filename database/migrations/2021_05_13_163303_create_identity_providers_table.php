@@ -21,6 +21,7 @@ class CreateIdentityProvidersTable extends Migration
             $table->string('provider_name');
             $table->primary(['provider_name', 'provider_id']); // 複合キー
             $table->unique(['user_id', 'provider_name']); // ユニーク制限
+            $table->string('password')->nullable(); // nullable()を追加
             $table->timestamps();
         });
     }

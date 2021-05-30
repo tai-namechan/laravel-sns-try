@@ -46,6 +46,3 @@ Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 
 // GitHubの認証後に戻るためのルーティング
 Route::get('/login/callback/github', 'Auth\LoginController@handleProviderCallback');
-
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
