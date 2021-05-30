@@ -37,12 +37,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// github
-// Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-// Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-
 // GitHubの認証ページに遷移するためのルーティング
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 
 // GitHubの認証後に戻るためのルーティング
-Route::get('/login/callback/github', 'Auth\LoginController@handleProviderCallback');
+Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallback');

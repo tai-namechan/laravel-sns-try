@@ -37,5 +37,21 @@ return [
         'redirect' => env('APP_URL') . '/login/github/callback',
     ],
     // config/service.php に直接 Client ID と Client Secret の値を書いてしまうと、 GitHub などでソースコードを公開する際に、キーが漏れてしまうから、 .env に実際の値を記述し、 config/service.php からは .env の値を参照するようにする
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('APP_URL') . '/login/google/callback',
+    ],
 
+    'facebook' => [
+        'client_id' =>  env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect' =>  env('APP_URL') . '/login/facebook/callback',
+    ],
+
+    'twitter' => [
+        'client_id' =>  env('TWITTER_APP_ID'),
+        'client_secret' => env('TWITTER_APP_SECRET'),
+        'redirect' =>  env('APP_URL') . '/login/twitter/callback',
+    ],
 ];

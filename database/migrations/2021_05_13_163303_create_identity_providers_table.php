@@ -13,6 +13,7 @@ class CreateIdentityProvidersTable extends Migration
      */
     public function up()
     {
+        // usersに紐付けるプロバイダー情報のテーブル
         Schema::create('identity_providers', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             // usersテーブルのuser＿idにidentity＿providersにidを紐づけて管理したいためしたのように
@@ -21,7 +22,6 @@ class CreateIdentityProvidersTable extends Migration
             $table->string('provider_name');
             $table->primary(['provider_name', 'provider_id']); // 複合キー
             $table->unique(['user_id', 'provider_name']); // ユニーク制限
-            $table->string('password')->nullable(); // nullable()を追加
             $table->timestamps();
         });
     }
