@@ -55,7 +55,7 @@ class LoginController extends Controller
   // GitHubの認証後に戻るルート
   public function handleProviderCallback() {
     try {
-      $user = Socialite::driver($provider)->user();
+      $user = Socialite::driver('github')->user();
   } catch (Exception $e) {
       return redirect('/login');
   }
