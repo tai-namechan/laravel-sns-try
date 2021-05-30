@@ -97,5 +97,5 @@ class LoginController extends Controller
   //   ログイン
   //   return redirect()->to('/home'); 
   //   homeページに転送
-  }
+  
 }
