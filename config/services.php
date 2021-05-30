@@ -37,15 +37,18 @@ return [
     //     'redirect'        => env('TWITTER_REDIRECT_URI'),
     // ],
 
-    'facebook' => [
-        'client_id'        => env('FACEBOOK_KEY'),
-        'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect'        => env('FACEBOOK_REDIRECT_URI'),
-    ],
-
+    // github認証
     'github' => [
         'client_id'        => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('APP_URL') . '/login/github/callback',
+        'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
+
+    // facebook認証
+    'facebook' => [
+        'client_id'        => env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect'        => env('FACEBOOK_REDIRECT_URI'),
+    ],
+
 ];
