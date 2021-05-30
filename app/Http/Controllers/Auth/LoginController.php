@@ -49,6 +49,8 @@ class LoginController extends Controller
  */
  public function redirectToProvider() {
     return Socialite::driver("github")->redirect();
+    return Socialite::driver("facebook")->redirect();
+  
   }
  
  /**
@@ -60,7 +62,7 @@ class LoginController extends Controller
     try {
       $user = Socialite::with("github")->user();
     } catch (Exception $e) {
-      return redirect('/welcome'); // エラーならウェルカムページに転送
+      return redirect('/login'); // エラーならログインページに転送
     }
  
     // nameかnickNameをuserNameにする
