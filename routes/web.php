@@ -38,7 +38,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // GitHubの認証ページに遷移するためのルーティング
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+// Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 
 // GitHubの認証後に戻るためのルーティング
-Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallback');
+// Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->where('social', 'github|google|facebook|twitter');
+Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'github|google|facebook|twitter');
