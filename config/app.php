@@ -230,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // socialiteを利用する準備
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 

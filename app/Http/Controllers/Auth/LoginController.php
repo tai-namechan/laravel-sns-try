@@ -44,7 +44,7 @@ class LoginController extends Controller
     }
 
     /**
- * GitHubの認証ページヘユーザーを転送するためのルート
+ * GitHubの認証ページヘ遷移（ユーザーを転送するためのルート）
  *
  * @return \Symfony\Component\HttpFoundation\RedirectResponse
  */
@@ -58,25 +58,44 @@ class LoginController extends Controller
   * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
   */
   public function handleProviderCallback() {
-    try {
-      $user = Socialite::with("github")->user();
-    } catch (Exception $e) {
-      return redirect('/welcome'); // エラーならウェルカムページに転送
+    $socialUser = Socialite::driver('github')->stateless()->user();
+      $user = User::where([ 'email' => $socialUser->getEmail() ])->first();
+
+     if ($user) {
+          Auth::login($user);
+          return redirect('/home');
+      } else {
+          $user = User::create([
+              'name' => $socialUser->getNickname(),
+              'email' => $socialUser->getEmail(),
+              'password' => Hash::make($socialUser->getNickname()),  
+          ]);
+          Auth::login($user);
+          return redirect('/home');
+      }
     }
+  //   try {
+  //     $user = Socialite::with("github")->user();
+  //   } catch (Exception $e) {
+  //     return redirect('/welcome'); 
+  //     エラーならウェルカムページに転送
+  //   }
  
-    // nameかnickNameをuserNameにする
-    if ($user->getName()) {
-      $userName = $user->getName();
-    } else {
-      $userName = $user->getNickName();
-    }
+  //   nameかnickNameをuserNameにする
+  //   if ($user->getName()) {
+  //     $userName = $user->getName();
+  //   } else {
+  //     $userName = $user->getNickName();
+  //   }
  
-    // mailアドレスおよび名前を保存
-    $authUser = User::firstOrCreate([
-      'email' => $user->getEmail(),
-      'name' => $userName
-    ]);
-    auth()->login($authUser); // ログイン
-    return redirect()->to('/home'); // homeページに転送
+  //   mailアドレスおよび名前を保存
+  //   $authUser = User::firstOrCreate([
+  //     'email' => $user->getEmail(),
+  //     'name' => $userName
+  //   ]);
+  //   auth()->login($authUser); 
+  //   ログイン
+  //   return redirect()->to('/home'); 
+  //   homeページに転送
   }
 }

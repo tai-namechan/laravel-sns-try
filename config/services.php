@@ -30,9 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // githubのOAuthの設定
     'github' => [
-        'client_id'        => env('GITHUB_CLIENT_ID'),
+        'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect'        => env('GITHUB_REDIRECT_URI'),
+        'redirect' => env('APP_URL') . '/login/github/callback',
     ],
+    // config/service.php に直接 Client ID と Client Secret の値を書いてしまうと、 GitHub などでソースコードを公開する際に、キーが漏れてしまうから、 .env に実際の値を記述し、 config/service.php からは .env の値を参照するようにする
+
 ];
